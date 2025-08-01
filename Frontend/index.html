@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEMSTask | Task Management Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div id="auth-view" class="view">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-form-wrapper" id="login-wrapper">
+                        <h1>Welcome Back!</h1>
+                        <p>Log in to continue your work.</p>
+                        <form id="login-form">
+                            <div class="input-group"><i data-feather="mail"></i><input type="email" id="login-email" placeholder="Email Address" required></div>
+                            <div class="input-group"><i data-feather="lock"></i><input type="password" id="login-password" placeholder="Password" required></div>
+                            <button type="submit" class="btn btn-primary w-100"><span id="login-spinner" class="spinner d-none"></span><span class="btn-text">Log In</span></button>
+                        </form>
+                        <p class="toggle-auth">Don't have an account? <a href="#" id="show-register">Sign Up</a></p>
+                    </div>
+                    <div class="auth-form-wrapper d-none" id="register-wrapper">
+                        <h1>Create Account</h1>
+                        <p>Register to manage your projects like a pro.</p>
+                        <form id="register-form">
+                            <div class="input-group"><i data-feather="user"></i><input type="text" id="reg-name" placeholder="Full Name" required></div>
+                            <div class="input-group"><i data-feather="mail"></i><input type="email" id="reg-email" placeholder="Email Address" required></div>
+                            <div class="input-group"><i data-feather="lock"></i><input type="password" id="reg-password" placeholder="Password" required></div>
+                            <button type="submit" class="btn btn-primary w-100"><span id="reg-spinner" class="spinner d-none"></span><span class="btn-text">Create Account</span></button>
+                        </form>
+                        <p class="toggle-auth">Already have an account? <a href="#" id="show-login">Log In</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dashboard-view" class="view d-none">
+            <aside class="sidebar">
+                <div class="sidebar-header"><i data-feather="check-square"></i><h2>GEMSTask</h2></div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-view="tasks"><i data-feather="home"></i> Dashboard</a>
+                    <a href="#" class="nav-item" data-view="users"><i data-feather="users"></i> Users</a>
+                    <a href="#" class="nav-item" data-view="help"><i data-feather="help-circle"></i> Help</a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div id="user-profile"><span id="user-initial" class="user-avatar"></span><span id="user-name-display"></span></div>
+                    <button id="logout-btn" class="btn-icon"><i data-feather="log-out"></i></button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <div id="tasks-view" class="main-view">
+                    <header class="main-header">
+                        <h1>Dashboard</h1>
+                        <button id="add-task-btn" class="btn btn-primary"><i data-feather="plus"></i> Add Task</button>
+                    </header>
+                    <section id="task-board" class="task-board"></section>
+                </div>
+                <div id="users-view" class="main-view d-none">
+                     <header class="main-header">
+                        <h1>User Management</h1>
+                    </header>
+                    <section id="user-list-container" class="user-list-container"></section>
+                </div>
+                <div id="help-view" class="main-view d-none">
+                    <header class="main-header">
+                        <h1>How to Use GEMSTask</h1>
+                    </header>
+                    <section class="help-content">
+                        <h2>Getting Started</h2>
+                        <p>Welcome to GEMSTask! This guide will walk you through the main features of the application.</p>
+                        <h2>1. Authentication</h2>
+                        <p>First, you need an account. You can either <strong>Sign Up</strong> to create a new account or <strong>Log In</strong> if you already have one. Authentication is required to access the dashboard and manage tasks.</p>
+
+                        <h2>2. The Dashboard</h2>
+                        <p>This is your main workspace. It displays all current tasks as cards. You can see the task title, description, status (Pending, In-Progress, Completed), and its due date at a glance.</p>
+                        <ul>
+                            <li><strong>Adding a Task:</strong> Click the "Add Task" button on the dashboard to open a form. Fill in the details and assign it to any registered user.</li>
+                            <li><strong>Editing a Task:</strong> On each task card, click the pencil icon (<i data-feather="edit-2" class="help-icon"></i>) to open the form with the task's current details, which you can then modify.</li>
+                            <li><strong>Deleting a Task:</strong> Click the trash can icon (<i data-feather="trash-2" class="help-icon"></i>) on a task card to permanently remove it. A confirmation will be required.</li>
+                        </ul>
+                        <h2>3. User Management</h2>
+                        <p>Click on the "Users" link in the sidebar to see a list of all registered users in the system, along with their registration date.</p>
+                        <h2>4. Logging Out</h2>
+                        <p>You can log out securely by clicking the exit icon (<i data-feather="log-out" class="help-icon"></i>) next to your name in the bottom-left corner of the sidebar. This will clear your session and return you to the login screen.</p>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+    <div id="task-modal" class="modal-wrapper d-none">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="modal-title">Add New Task</h3><button id="close-modal-btn" class="btn-icon">&times;</button></div>
+            <div class="modal-body">
+                <form id="task-form">
+                    <input type="hidden" id="task-id">
+                    <div class="form-group"><label for="task-title">Title</label><input type="text" id="task-title" required></div>
+                    <div class="form-group"><label for="task-desc">Description</label><textarea id="task-desc" rows="3" required></textarea></div>
+                    <div class="form-group"><label for="task-due-date">Due Date</label><input type="date" id="task-due-date" required></div>
+                    <div class="form-group"><label for="task-user">Assign To</label><select id="task-user" required></select></div>
+                    <div class="form-group"><label for="task-status">Status</label><select id="task-status"><option value="Pending">Pending</option><option value="In-Progress">In-Progress</option><option value="Completed">Completed</option></select></div>
+                    <div class="modal-footer"><button type="submit" class="btn btn-primary w-100"><span id="task-spinner" class="spinner d-none"></span><span class="btn-text">Save Task</span></button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="alert-toast" class="toast"></div>
+    <footer class="app-footer">
+        <p>Made by Pareeshi Paharia for the Backend Task by IEEE R10 YP GEMS Team.</p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
