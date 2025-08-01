@@ -48,7 +48,7 @@ A MongoDB Atlas account (or a local MongoDB instance).
 
 Installation Steps:- 
 1. Clone the Repository
-"git clone <link>
+"git clone <https://github.com/Sunshield90/GEMS-BACKEND-TASK-R10>
 cd task-management-app"
 2. Configure the Backend
 "cd backend
